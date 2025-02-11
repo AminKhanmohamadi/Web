@@ -31,6 +31,7 @@ OPENAI_API_KEY=api
 ### **3. Build & Run with Docker**
 ```sh
 $ docker-compose up --build
+$ docker-compose exec -it app manage.py migrate
 ```
 This will start the **Django app, PostgreSQL, and RabbitMQ** inside Docker containers.
 
