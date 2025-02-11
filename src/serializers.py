@@ -1,7 +1,6 @@
 from rest_framework import serializers
-from .models import Knowledge , Article
 
-
+from .models import Knowledge, Article
 
 
 class ArticleSerializer(serializers.ModelSerializer):
@@ -12,6 +11,7 @@ class ArticleSerializer(serializers.ModelSerializer):
 
 class KnowledgeSerializer(serializers.ModelSerializer):
     articles = serializers.SerializerMethodField()
+
     class Meta:
         model = Knowledge
         fields = ["id", "title", "created_by", "created_at", "updated_at", "status", "articles"]
@@ -23,5 +23,3 @@ class KnowledgeSerializer(serializers.ModelSerializer):
         if not user.is_superuser:
             articles = articles.filter(status="Pub")
         return ArticleSerializer(articles, many=True, context=self.context).data
-
-

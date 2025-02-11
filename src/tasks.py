@@ -1,12 +1,13 @@
 import os
+
 from celery import shared_task
-from openai import OpenAI
-from .models import Article
-import json
 from dotenv import load_dotenv
+from openai import OpenAI
+
+from .models import Article
+
 load_dotenv()
 OPENAI_API_KEY = os.getenv("OPENAI_API_KEY")
-
 
 
 @shared_task
