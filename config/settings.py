@@ -41,6 +41,8 @@ INSTALLED_APPS = [
     'rest_framework',
     'djoser',
     'django_filters',
+    # local apps
+    'src.apps.SrcConfig'
 ]
 
 MIDDLEWARE = [
