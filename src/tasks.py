@@ -41,5 +41,4 @@ def summarize_article(article_id):
     except Article.DoesNotExist:
         return f"Article with ID {article_id} not found."
 
-    except openai.error.OpenAIError as e:
-        return f"OpenAI Error: {str(e)}"
+
