@@ -1,8 +1,11 @@
+import os
 from celery import shared_task
 from openai import OpenAI
 from .models import Article
 import json
-OPENAI_API_KEY = "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"
+from dotenv import load_dotenv
+load_dotenv()
+OPENAI_API_KEY = os.getenv("OPENAI_API_KEY")
 
 
 
