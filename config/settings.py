@@ -25,7 +25,7 @@ SECRET_KEY = 'django-insecure-2g!3skt@p_nyz_ah4e9t)0j0(ew@q68xobylnjtjlbve-u21f4
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
@@ -86,6 +86,8 @@ DATABASES = {
         'NAME': 'weblog_db',
         'USER': 'postgres',
         'PASSWORD': 'aminkhm',
+        'HOST': 'db',
+        'PORT': '5432',
     }
 }
 
@@ -136,10 +138,16 @@ REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': (
         'rest_framework_simplejwt.authentication.JWTAuthentication',
     ),
-    'PAGE_SIZE': 5,
+    'PAGE_SIZE': 1,
 }
 
 SIMPLE_JWT = {
     'AUTH_HEADER_TYPES': ('JWT', ),
     'ACCESS_TOKEN_LIFETIME': timedelta(days=1)
 }
+
+CELERY_BROKER_URL = 'amqp://guest:guest@rabbitmq:5672//'
+CELERY_ACCEPT_CONTENT = ['json']
+CELERY_TASK_SERIALIZER = 'json'
+CELERY_RESULT_BACKEND = 'rpc://'
+CELERY_TIMEZONE = 'Asia/Tehran'
