@@ -15,10 +15,10 @@ class KnowledgeViewSet(viewsets.ModelViewSet):
 
     def get_queryset(self):
         user = self.request.user
-        if user.is_superuser:
-            return Knowledge.objects.all()
-        return Knowledge.objects.filter(status='Pub')
-
+        queryset = Knowledge.objects.all()
+        if not user.is_superuser:
+           queryset = queryset.filter(status="Pub")
+        return queryset
 
 class ArticleViewSet(viewsets.ModelViewSet):
     http_method_names = ['get']
@@ -26,6 +26,7 @@ class ArticleViewSet(viewsets.ModelViewSet):
 
     def get_queryset(self):
         user = self.request.user
-        if user.is_superuser:
-            return Article.objects.all()
-        return Article.objects.filter(status='Pub')
+        queryset = Article.objects.all()
+        if not user.is_superuser:
+            queryset = queryset.filter(status='Pub')
+        return queryset
