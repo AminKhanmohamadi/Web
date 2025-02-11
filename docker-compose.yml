@@ -1,10 +1,10 @@
-version: '3.8'
-
 services:
   db:
-    image: postgres:13
+    image: postgres:16.4
+    ports:
+      - "5435:5432"
     volumes:
-      - postgres_data:/var/lib/postgresql/data/
+      - weblog_db-data:/var/lib/postgresql/data/
     environment:
       - POSTGRES_DB=weblog_db
       - POSTGRES_USER=postgres
@@ -19,6 +19,29 @@ services:
       - "8000:8000"
     depends_on:
       - db
+      - rabbitmq
+
+  rabbitmq:
+    image: rabbitmq:management
+    container_name: rabbitmq
+    restart: always
+    ports:
+      - "5673:5672"
+      - "15672:15672"
+    environment:
+      RABBITMQ_DEFAULT_USER: guest
+      RABBITMQ_DEFAULT_PASS: guest
+
+  celery_worker:
+    build: .
+    container_name: celery_worker
+    command: celery -A config worker --loglevel=info
+    volumes:
+      - .:/app
+    depends_on:
+      - app
+      - rabbitmq
+    restart: always
 
 volumes:
-  postgres_data:
+  weblog_db-data:
